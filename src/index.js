@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('node:path');
-const { leerInstrumentos } = require('./archivos');
+const { leerInstrumentos, escribirInstrumentos } = require('./archivos');
 
 const PORT = 3000;
 
@@ -14,12 +14,13 @@ async function main() {
 
     app.use(express.json());
 
+    // 1. Ruta raíz / bienvenida
     app.get('/', (req, res) => {
       console.log("Solicitud entrante recibida en la raíz");
       res.status(200).json({ mensaje: 'API de Catálogo de Instrumentos Musicales disponible 🎵' });
     });
 
-  
+    // 2. Listado de instrumentos (con soporte para filtrar por ?familia=...)
     app.get('/api/instrumentos', (req, res) => {
       const { familia } = req.query;
 
@@ -33,6 +34,7 @@ async function main() {
       res.status(200).json(instrumentos);
     });
 
+    // 3. Detalle de un instrumento por su ID
     app.get('/api/instrumentos/:id', (req, res) => {
       const idBuscado = Number(req.params.id);
       const instrumento = instrumentos.find((ins) => ins.id === idBuscado);
@@ -44,7 +46,8 @@ async function main() {
       res.status(200).json(instrumento);
     });
 
-    app.post('/api/instrumentos', (req, res) => {
+    // 4. Creación de un nuevo instrumento (con escritura asíncrona en archivo)
+    app.post('/api/instrumentos', async (req, res) => {
       const { nombre, familia, origen, descripcion, disponible } = req.body;
 
       if (
@@ -70,7 +73,13 @@ async function main() {
 
       instrumentos.push(nuevoInstrumento);
 
-      res.status(201).json(nuevoInstrumento);
+      try {
+        await escribirInstrumentos(rutaArchivo, instrumentos);
+        res.status(201).json(nuevoInstrumento);
+      } catch (error) {
+        console.error('Error al guardar el archivo:', error.message);
+        res.status(500).json({ error: 'No se pudo guardar el instrumento en el archivo.' });
+      }
     });
 
     app.listen(PORT, () => {
