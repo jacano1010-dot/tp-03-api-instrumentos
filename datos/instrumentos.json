@@ -1,0 +1,42 @@
+[
+{
+    "id": 1,
+    "nombre": "Guitarra Acústica",
+    "familia": "cuerda",
+    "origen": "España",
+    "descripcion": "Guitarra de seis cuerdas con caja de resonancia acústica.",
+    "disponible": true
+  },
+  {
+    "id": 2,
+    "nombre": "Flauta Traversa",
+    "familia": "viento",
+    "origen": "Europa",
+    "descripcion": "Instrumento de viento madera que se toca de lado.",
+    "disponible": true
+  },
+  {
+    "id": 3,
+    "nombre": "Batería Acústica",
+    "familia": "percusión",
+    "origen": "Estados Unidos",
+    "descripcion": "Conjunto de tambores y platillos tocados con baquetas.",
+    "disponible": false
+  },
+  {
+    "id": 4,
+    "nombre": "Violín",
+    "familia": "cuerda",
+    "origen": "Italia",
+    "descripcion": "Instrumento de cuerda frotada, el más agudo de su familia.",
+    "disponible": true
+  },
+  {
+    "id": 5,
+    "nombre": "Saxofón Alto",
+    "familia": "viento",
+    "origen": "Bélgica",
+    "descripcion": "Instrumento de viento de latón con lengüeta simple.",
+    "disponible": true
+  }
+]
